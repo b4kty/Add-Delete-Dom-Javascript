@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Box</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+    
+        #myForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+    
+        #container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    
+        #container .box {
+            width: 300px;
+            margin: 0 10px 20px; /* Menambahkan margin pada kotak berita */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        div {
+            margin-bottom: 15px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        input,
+        select,
+        textarea {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin: 4px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #45a049;
+        }
+    
+        @media screen and (max-width: 600px) {
+            #myForm {
+                width: calc(100% - 40px);
+                margin-bottom: 20px;
+            }
+    
+            #container .box {
+                width: calc(100% - 40px);
+                margin: 0 20px 20px; /* Menambahkan margin pada kotak berita */
+            }
+        }
+    </style>
+    
+    
+    
+</head>
+<body>
+    <div>
+        <div id="container"></div>
+        <div class="iniForm">
+            <form id="myForm">
+                <div>
+                    <label for="judul">Judul</label>
+                    <input type="text" id="judul">
+                </div>
+            
+                <div>
+                    <label for="gambar">Gambar</label>
+                    <input type="file" id="gambar">
+                </div>
+            
+                <div>
+                    <label for="kategori">Kategori</label>
+                    <select id="kategori">
+                        <option value="Sport">Sport</option>
+                        <option value="Bisnis">Bisnis</option>
+                        <option value="Politic">Politic</option>
+                    </select>
+                </div>
+            
+                <div>
+                    <label for="kutipan">Kutipan</label>
+                    <textarea id="kutipan"></textarea>
+                </div>
+            
+                <div>
+                    <button type="button" onclick="tambahBox()">Tambah Box</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+
+    
+
+    <script>
+        function tambahBox() {
+            // Mendapatkan nilai input
+            var judul = document.getElementById('judul').value;
+            var gambarInput = document.getElementById('gambar');
+            var kategori = document.getElementById('kategori').value;
+            var kutipan = document.getElementById('kutipan').value;
+
+            // Membuat elemen box baru
+            var box = document.createElement('div');
+            box.className = 'box';
+
+            // Membaca gambar menggunakan FileReader
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // Menetapkan URL gambar ke elemen <img>
+                box.innerHTML = `
+                    <img src="${e.target.result}" alt="" style="width:100%; height:auto;">
+                    <h2>${judul}</h2>
+                    <p>${kutipan}</p>
+                    <p>${kategori}</p>
+                `;
+            };
+            reader.readAsDataURL(gambarInput.files[0]);
+
+            // Menambahkan box ke dalam container
+            var container = document.getElementById('container');
+            container.appendChild(box);
+
+            // Mengosongkan nilai input setelah menambahkan box
+            document.getElementById('judul').value = '';
+            gambarInput.value = ''; // Mengosongkan input file
+            document.getElementById('kategori').value = 'Sport';
+            document.getElementById('kutipan').value = '';
+        }
+    </script>
+
+</body>
+</html>
